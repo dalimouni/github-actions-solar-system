@@ -61,5 +61,23 @@ jobs:
             name: Code-Coverage-Result
             path: coverage
             retention-days: 5
-          
+    docker:
+      runs-on: ubuntu-latest
+      needs: [unit-testing, code-coverage]    
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+        - name: GHCR login
+          uses: docker/login-action@v4
+          with:
+            registry: ghcr.io
+            username: ${{ github.repository_owner }}
+            password: ${{ secrets.GITHUB_TOKEN }} 
+        - name: build and push the image
+          uses: docker/build-push-action@v7
+          with:
+            context: .
+            push: true
+            tags: 
+              ghcr.io/${{ github.repository_owner }}/solar-system:${{github.sha}}
         
