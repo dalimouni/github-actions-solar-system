@@ -64,7 +64,7 @@ jobs:
     docker:
       runs-on: ubuntu-latest
       permissions:
-        packages: write
+          packages: write
       needs: [unit-testing, code-coverage]    
       steps:
         - name: Checkout Repository
