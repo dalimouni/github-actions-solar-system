@@ -6,6 +6,8 @@ on:
     branches:
       - main
       - 'feature/*'
+permissions:
+  packages: write
 env: 
   MONGO_URI: mongodb+srv://supercluster.d83jj.mongodb.net/superData
   MONGO_USERNAME: superuser
@@ -65,8 +67,6 @@ jobs:
             retention-days: 5
     docker:
       runs-on: ubuntu-latest
-      permissions:
-        packages: write
       needs: [unit-testing, code-coverage]    
       steps:
         - name: Checkout Repository
